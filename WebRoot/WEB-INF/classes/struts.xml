@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+	"http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+	<package name="user" namespace="/user" extends="struts-default">
+		<interceptors>
+			<interceptor name="myInterceptor" class="edson.web.utils.MyInterceptor">
+				<param name="excludeMethods">login</param>
+			</interceptor>
+			<interceptor-stack name="myStack">
+				<interceptor-ref name="defaultStack"/>
+				<interceptor-ref name="myInterceptor"/>
+			</interceptor-stack>
+		</interceptors>
+	
+		<action name="user_*" class="edson.web.action.UserAction" method="{1}">
+			<result name="input">/login/login.jsp</result>
+			<result type="redirect"   name="login_success">/login/home.jsp</result>
+			<result name="list_success">/user/list.jsp</result>
+			<result name="add_success">/user/add.jsp</result>
+			<result name="search_success">/user/list.jsp</result>
+			<result name="delete_success">/user/list.jsp</result>
+			<result name="view_success">/user/view.jsp</result>
+			<result name="downloadFile_success" type="stream">
+				<param name="contentType">application/octet-stream</param>
+				<param name="contentDisposition">attachment;filename=${uploadFileName}</param>
+				<param name="inputStream">${inputStream}</param>
+			</result>
+			<result name="editBack_success">/user/edit.jsp</result>
+			<result name="editData_success">/user/edit.jsp</result>
+			<result name="error">/user/error.jsp</result>
+			<interceptor-ref name="myStack"/>
+			<exception-mapping result="error" exception="edson.web.exceptions.UserException"/>
+			<allowed-methods>login,list,add,search,delete,view,downloadFile,editBack,editData</allowed-methods>
+		</action>
+		
+		
+		
+	</package>
+
+
+</struts>	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
